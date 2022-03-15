@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"tempbin/server/db"
 	"tempbin/server/handlers"
 
 	"github.com/go-chi/chi/v5"
@@ -11,7 +12,8 @@ import (
 func main() {
 	// Initialization
 	r := chi.NewRouter()
-	go cleaner()
+	db.InitDB()
+	// go cleaner()
 
 	// middlewares
 	r.Use(middleware.Logger)
