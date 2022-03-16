@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/hex"
+	"fmt"
 	"io"
 	"log"
 	"math/rand"
@@ -9,6 +10,7 @@ import (
 	"os"
 	"strconv"
 	"tempbin/server/db"
+	"time"
 )
 
 func Upload(w http.ResponseWriter, r *http.Request) {
@@ -81,10 +83,12 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	close(ch)
 
 	w.WriteHeader(200)
+	fmt.Fprint(w, url)
 	return
 }
 
 func getUUID() string {
+	rand.Seed(time.Now().UnixNano())
 	p := make([]byte, 4)
 	rand.Read(p)
 	return hex.EncodeToString(p)

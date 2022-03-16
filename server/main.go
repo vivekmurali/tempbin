@@ -20,6 +20,9 @@ func main() {
 
 	// routes
 	r.Post("/upload", handlers.Upload)
-
+	r.Route("/download", func(r chi.Router) {
+		r.Get("/{url}", handlers.DownloadHandler)
+		r.Post("/{url}", handlers.Download)
+	})
 	http.ListenAndServe(":3000", r)
 }
