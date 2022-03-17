@@ -4,16 +4,23 @@ import (
 	"net/http"
 	"tempbin/server/db"
 	"tempbin/server/handlers"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-co-op/gocron"
 )
 
 func main() {
 	// Initialization
 	r := chi.NewRouter()
 	db.InitDB()
+
 	// go cleaner()
+	s := gocron.NewScheduler(time.UTC)
+	var job func() = worker
+	s.Every(10).Minutes().Do(job)
+	s.StartAsync()
 
 	// middlewares
 	r.Use(middleware.Logger)

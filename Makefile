@@ -3,4 +3,4 @@ serve:
 
 
 clean:
-	del  .\bucket\*
+	del  .\\bucket\*
