@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"tempbin/server/db"
 	"tempbin/server/handlers"
@@ -26,7 +27,11 @@ func main() {
 	r.Use(middleware.Logger)
 
 	// routes
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "hello")
+	})
 	r.Post("/upload", handlers.Upload)
+	r.Get("/upload", handlers.UploadHandler)
 	r.Route("/download", func(r chi.Router) {
 		r.Get("/{url}", handlers.DownloadHandler)
 		r.Post("/{url}", handlers.Download)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Upload</title>
+	</head>
+	<body>
+		<form
+			action="/upload"
+			method="post"
+			enctype="multipart/form-data"
+		>
+			<label for="file">Select file</label>
+			<input type="file" name="file" id="" required />
+			<br>
+			<label for="password"
+				>password protect (optional)</label
+			>
+			<input type="password" name="password" id="" placeholder="Password"/>
+			<br>
+			<label for="number"
+				>limit the number of downloads (optional)</label
+			>
+			<input type="number" name="limit" id="" placeholder="5"/>
+			<br>
+			<input type="submit" value="submit" />
+		</form>
+	</body>
+</html>

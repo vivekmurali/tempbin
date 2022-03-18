@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"net/http"
@@ -76,7 +77,8 @@ func Download(w http.ResponseWriter, r *http.Request) {
 	defer f.Close()
 
 	// change filename to filename
-	w.Header().Set("Content-Disposition", "attachment; filename="+name)
+	arg := fmt.Sprintf("attachment; filename=\"%s\"", name)
+	w.Header().Set("Content-Disposition", arg)
 	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 	io.Copy(w, f)
 	w.WriteHeader(200)

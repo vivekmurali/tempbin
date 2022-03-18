@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/hex"
 	"fmt"
+	"html/template"
 	"io"
 	"log"
 	"math/rand"
@@ -12,6 +13,16 @@ import (
 	"tempbin/server/db"
 	"time"
 )
+
+func UploadHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("server/template/upload.html")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	tmpl.Execute(w, nil)
+}
 
 func Upload(w http.ResponseWriter, r *http.Request) {
 	// parse multipart with max 10mb
