@@ -26,7 +26,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Upload(w http.ResponseWriter, r *http.Request) {
-	// parse multipart with max 10mb
+	// parse multipart with max 10mb in memory
 	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
 		log.Println("Problem parsing the file " + err.Error())
@@ -38,6 +38,11 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Form file problem " + err.Error())
 		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	// max file size is 20MB
+	if h.Size > (20 << 20) {
+		w.WriteHeader(400)
 		return
 	}
 	name := strings.ToValidUTF8(h.Filename, "")
