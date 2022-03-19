@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"tempbin/server/db"
 	"time"
 )
@@ -39,7 +40,8 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	name := h.Filename
+	name := strings.ToValidUTF8(h.Filename, "")
+	// name := h.Filename
 	password := r.FormValue("password")
 	isProtected := false
 	if len(password) > 0 {
