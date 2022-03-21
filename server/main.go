@@ -30,8 +30,8 @@ func main() {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "hello")
 	})
-	r.Post("/upload", handlers.Upload)
 	r.Get("/upload", handlers.UploadHandler)
+	r.Post("/upload", handlers.Upload)
 	r.Route("/download", func(r chi.Router) {
 		r.Get("/{url}", handlers.DownloadHandler)
 		r.Post("/{url}", handlers.Download)

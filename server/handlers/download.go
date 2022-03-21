@@ -28,13 +28,16 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
 	info := FileInfo{Name: name, Url: url, IsLimit: isLimit, IsProtected: isProtected, Limit: limit}
 	if err != nil {
 		// fmt.Fprint(w, err)
-		w.WriteHeader(http.StatusBadRequest)
+		// w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/download/"+url)
+		return
 	}
 
 	tmpl, err := template.ParseFiles("server/template/download.html")
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		// w.Write([]byte(err.Error()))
+		// w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/download/"+url)
+		return
 	}
 	tmpl.Execute(w, info)
 }
@@ -45,21 +48,26 @@ func Download(w http.ResponseWriter, r *http.Request) {
 
 	name, isProtected, isLimit, password, limit, err := db.GetData(url)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		// w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/download/"+url)
+		return
 	}
 
 	pw := r.FormValue("password")
 	if isProtected {
 		err = bcrypt.CompareHashAndPassword([]byte(password), []byte(pw))
 		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
+			// w.WriteHeader(http.StatusUnauthorized)
+			// return
+			returnError(w, "You are unauthorized", "/download/"+url)
 			return
 		}
 	}
 
 	if isLimit {
 		if limit < 1 {
-			w.WriteHeader(http.StatusBadRequest)
+			// w.WriteHeader(http.StatusBadRequest)
+			returnError(w, "Limit reached", "/download")
 			return
 		}
 
@@ -71,7 +79,7 @@ func Download(w http.ResponseWriter, r *http.Request) {
 	f, err := os.Open("./bucket/" + url)
 	if err != nil {
 		// panic(err)
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadGateway)
 		return
 	}
 	defer f.Close()

@@ -18,7 +18,8 @@ import (
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("server/template/upload.html")
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		// w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/upload")
 		return
 	}
 
@@ -30,19 +31,19 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
 		log.Println("Problem parsing the file " + err.Error())
-		log.Println(r.Header)
-		w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/upload")
+		// w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	f, h, err := r.FormFile("file")
 	if err != nil {
 		log.Println("Form file problem " + err.Error())
-		w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/upload")
 		return
 	}
 	// max file size is 20MB
 	if h.Size > (20 << 20) {
-		w.WriteHeader(400)
+		returnError(w, "Max file size is 20MB", "/upload")
 		return
 	}
 	name := strings.ToValidUTF8(h.Filename, "")
@@ -66,9 +67,6 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	ch := make(chan bool)
 	// errch := make(chan error)
 
-	// ch, name, url, is_protected, password, is_limit, limit
-	// insertDB() tx, with channel to rollback
-	// go db.InsertDB(ch, errch, name, url, isProtected, password, isLimit, limit)
 	go db.InsertDB(ch, name, url, isProtected, password, isLimit, limit)
 
 	// url is the same as the file name
@@ -77,7 +75,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		ch <- false
 		log.Println("Error creating a file to store " + err.Error())
-		w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/upload")
 		return
 	}
 
@@ -85,17 +83,9 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		ch <- false
 		log.Println("Error copying file " + err.Error())
-		w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/upload")
 		return
 	}
-
-	// err = <-errch
-	// if err != nil {
-	// 	ch <- false
-	// 	log.Println("Error copying file " + err.Error())
-	// 	w.WriteHeader(http.StatusBadRequest)
-	// 	return
-	// }
 
 	ch <- true
 	close(ch)
