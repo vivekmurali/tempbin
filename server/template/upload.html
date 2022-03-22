@@ -5,15 +5,21 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-		<title>Upload</title>
+		<link rel="stylesheet" href="/static/style.css">
+		<title>Tempbin</title>
 	</head>
 
 	<body>
-		<header></header>
+		<header>
+			<div class="container">
+				<h1>TEMPB.IN</h1>
+			</div>
+
+		</header>
 		<div class="container">
 			<form action="/upload" method="post" enctype="multipart/form-data">
 
-				<label for="file">Upload a file</label>
+				<!-- <label for="file">Upload a file</label> -->
 				<input type="file" name="file" id="" required />
 				<br>
 				<div class="grid">
@@ -25,18 +31,19 @@
 				</div>
 				<!-- <br> -->
 				<div class="grid">
-				<details>
-					<summary>Limit downloads</summary>
-					<input type="number" name="limit" id="" placeholder="5" />
-				</details>
-				<!-- <label for="number">limit the number of downloads (optional)</label> -->
+					<details>
+						<summary>Limit downloads</summary>
+						<input type="number" name="limit" id="" placeholder="5" />
+					</details>
+					<!-- <label for="number">limit the number of downloads (optional)</label> -->
 				</div>
 				<br>
-				<input type="submit" class="outline" value="Upload" />
-				
+				<input type="submit" class="outline width-limit" value="Upload" />
+
 
 			</form>
 		</div>
+		<footer></footer>
 	</body>
 
 </html>

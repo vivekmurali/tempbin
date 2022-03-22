@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+		<link rel="stylesheet" href="/static/style.css">
 		<title>tempbin</title>
 	</head>
+
 	<body>
-		<p>Something seems to have gone wrong. {{.Err}}.</p>
+		<header>
+			<div class="container">
+				<h1>TEMPB.IN</h1>
+			</div>
 
-		<a href="{{.Link}}">return</a>
+		</header>
+		<div class="container">
 
+			<div class="grid">
+				<div>
+					<p>Something seems to have gone wrong.</p>
+				</div>
+				<div>
+					{{if .Err}}
+					{{.Err}}
+					{{end}}
+					<!-- <br> -->
+					<p></p>
+				</div>
+				<div><a href="{{.Link}}">return</a></div>
+			</div>
+
+
+
+		</div>
 	</body>
+
 </html>

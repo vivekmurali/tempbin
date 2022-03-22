@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<title>{{.Name}}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+		<link rel="stylesheet" href="/static/style.css">
+		<title>Download {{.Name}}</title>
 	</head>
+
 	<body>
-		<h3>Download {{.Name}}</h3>
+		<header>
+			<div class="container">
+				<h1>TEMPB.IN</h1>
+			</div>
+
+		</header>
+
+		<div class="container">
+		<h3>Download <span class="primary-download">{{.Name}}</span></h3>
 		{{if .IsLimit}}
-		<p>Downloads remaining: {{.Limit}}</p>
+		<h5>Downloads remaining: {{.Limit}}</h5>
 		{{end}}
 		<form action="/download/{{.Url}}" method="POST">
 			{{if .IsProtected}}
-			<input type="password" name="password" id="" />
+			<!-- <label for="password">Password</label> -->
+			<input type="password" name="password" placeholder="Password"/>
 			{{end}}
-			<input type="submit" value="download" />
+			<input type="submit" class="outline width-limit" value="download" />
 		</form>
+	</div>
 	</body>
+
 </html>
