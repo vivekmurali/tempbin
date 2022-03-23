@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <!-- <link rel="stylesheet" href="/server/static/style.css"> -->
+        <link rel="stylesheet" href="/static/style.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <title>Tempbin</title>
+    </head>
+
+    <body>
+        <header>
+            <div class="container">
+                <h1> <a href="/"> TEMPB.IN</a></h1>
+            </div>
+
+        </header>
+
+        <div class="container">
+
+            <article class="center-text" id="article" data-tooltip="Copy">
+                https://tempb.in/download/{{.}}
+            </article>
+
+        </div>
+        <script src="/static/app.js"></script>
+        <!-- <script src="/server/static/app.js"></script> -->
+    </body>
+
+</html>

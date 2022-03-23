@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/hex"
-	"fmt"
 	"html/template"
 	"io"
 	"log"
@@ -19,7 +18,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("server/template/upload.html")
 	if err != nil {
 		// w.WriteHeader(http.StatusBadRequest)
-		returnError(w, "", "/upload")
+		returnError(w, "", "/")
 		return
 	}
 
@@ -31,19 +30,19 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
 		log.Println("Problem parsing the file " + err.Error())
-		returnError(w, "", "/upload")
+		returnError(w, "", "/")
 		// w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	f, h, err := r.FormFile("file")
 	if err != nil {
 		log.Println("Form file problem " + err.Error())
-		returnError(w, "", "/upload")
+		returnError(w, "", "/")
 		return
 	}
 	// max file size is 20MB
 	if h.Size > (20 << 20) {
-		returnError(w, "Max file size is 20MB", "/upload")
+		returnError(w, "Max file size is 20MB", "/")
 		return
 	}
 	name := strings.ToValidUTF8(h.Filename, "")
@@ -75,7 +74,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		ch <- false
 		log.Println("Error creating a file to store " + err.Error())
-		returnError(w, "", "/upload")
+		returnError(w, "", "/")
 		return
 	}
 
@@ -83,15 +82,22 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		ch <- false
 		log.Println("Error copying file " + err.Error())
-		returnError(w, "", "/upload")
+		returnError(w, "", "/")
 		return
 	}
 
 	ch <- true
 	close(ch)
 
-	w.WriteHeader(200)
-	fmt.Fprint(w, url)
+	tmpl, err := template.ParseFiles("server/template/link.html")
+	if err != nil {
+		// w.WriteHeader(http.StatusBadRequest)
+		returnError(w, "", "/")
+		return
+	}
+	tmpl.Execute(w, url)
+	//w.WriteHeader(200)
+	// fmt.Fprint(w, url)
 	return
 }
 
