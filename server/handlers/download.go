@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"mime"
 	"net/http"
 	"os"
+	"path/filepath"
 	"tempbin/server/db"
 
 	"github.com/go-chi/chi/v5"
@@ -84,10 +86,11 @@ func Download(w http.ResponseWriter, r *http.Request) {
 	}
 	defer f.Close()
 
-	// change filename to filename
+	ext := filepath.Ext(name)
+	filetype, _, _ := mime.ParseMediaType(mime.TypeByExtension(ext))
 	arg := fmt.Sprintf("attachment; filename=\"%s\"", name)
 	w.Header().Set("Content-Disposition", arg)
-	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+	w.Header().Set("Content-Type", filetype)
 	io.Copy(w, f)
 	w.WriteHeader(200)
 	return
