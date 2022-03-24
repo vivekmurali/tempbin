@@ -41,7 +41,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// max file size is 20MB
-	if h.Size > (20 << 20) {
+	if h.Size > (50 << 20) {
 		returnError(w, "Max file size is 20MB", "/")
 		return
 	}
