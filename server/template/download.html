@@ -27,9 +27,15 @@
 			<!-- <label for="password">Password</label> -->
 			<input type="password" name="password" placeholder="Password"/>
 			{{end}}
-			<input type="submit" class="outline width-limit" value="download" />
+			<button type="submit" id="submit-btn" class="outline width-limit" value="download" onclick="load()" >Download</button>
 		</form>
 	</div>
 	</body>
 
 </html>
+
+<script>
+	function load(){
+		document.getElementById("submit-btn").setAttribute('aria-busy', "true");
+	}
+</script>

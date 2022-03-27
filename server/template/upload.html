@@ -38,7 +38,7 @@
 					<!-- <label for="number">limit the number of downloads (optional)</label> -->
 				</div>
 				<br>
-				<input type="submit" class="outline width-limit" value="Upload" />
+				<button type="submit" id="submit-btn" aria-busy="false" class="outline width-limit" value="Upload" onclick="load()">Upload</button>
 
 
 			</form>
@@ -47,3 +47,9 @@
 	</body>
 
 </html>
+
+<script>
+	function load(){
+		document.getElementById("submit-btn").setAttribute('aria-busy', "true");
+	}
+</script>
