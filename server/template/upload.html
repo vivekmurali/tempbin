@@ -14,7 +14,6 @@
 			<div class="container">
 				<h1> <a href="/"> TEMPB.IN</a></h1>
 			</div>
-
 		</header>
 		<div class="container">
 			<form action="/upload" method="post" enctype="multipart/form-data">
@@ -38,18 +37,21 @@
 					<!-- <label for="number">limit the number of downloads (optional)</label> -->
 				</div>
 				<br>
-				<button type="submit" id="submit-btn" aria-busy="false" class="outline width-limit" value="Upload" onclick="load()">Upload</button>
+				<button type="submit" id="submit-btn" aria-busy="false" class="outline width-limit" value="Upload"
+					onclick="load()">Upload</button>
 
 
 			</form>
 		</div>
-		<footer></footer>
+		<footer>
+			<p style="text-align: center;">Made by <a href="https://github.com/vivekmurali" target="_blank">Vivek Murali</a> &#169;</p>
+		</footer>
 	</body>
 
 </html>
 
 <script>
-	function load(){
+	function load() {
 		document.getElementById("submit-btn").setAttribute('aria-busy', "true");
 	}
 </script>
