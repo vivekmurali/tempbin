@@ -35,7 +35,7 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl, err := template.ParseFiles("server/template/download.html")
+	tmpl, err := template.ParseFiles("server/template/download.html", "server/template/footer.html")
 	if err != nil {
 		// w.WriteHeader(http.StatusBadRequest)
 		returnError(w, "", "/download/"+url)

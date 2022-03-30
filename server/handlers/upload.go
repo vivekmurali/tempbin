@@ -15,7 +15,7 @@ import (
 )
 
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("server/template/upload.html")
+	tmpl, err := template.ParseFiles("server/template/upload.html", "server/template/footer.html")
 	if err != nil {
 		// w.WriteHeader(http.StatusBadRequest)
 		returnError(w, "", "/")
@@ -89,7 +89,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	ch <- true
 	close(ch)
 
-	tmpl, err := template.ParseFiles("server/template/link.html")
+	tmpl, err := template.ParseFiles("server/template/link.html", "server/template/footer.html")
 	if err != nil {
 		// w.WriteHeader(http.StatusBadRequest)
 		returnError(w, "", "/")

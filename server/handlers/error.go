@@ -12,7 +12,7 @@ type ErrorData struct {
 func returnError(w http.ResponseWriter, errorString, link string) {
 
 	data := ErrorData{Err: errorString, Link: link}
-	tmpl, _ := template.ParseFiles("server/template/error.html")
+	tmpl, _ := template.ParseFiles("server/template/error.html", "server/template/footer.html")
 	tmpl.Execute(w, data)
 	w.WriteHeader(http.StatusBadRequest)
 }
