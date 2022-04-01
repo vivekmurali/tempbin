@@ -1,5 +1,7 @@
 serve:
-	go run ./server
+	go build ./server
+	./server.exe
+
 
 app:
 	go run ./gui
