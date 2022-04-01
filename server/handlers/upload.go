@@ -40,9 +40,9 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		returnError(w, "", "/")
 		return
 	}
-	// max file size is 20MB
+	// max file size is 50MB
 	if h.Size > (50 << 20) {
-		returnError(w, "Max file size is 20MB", "/")
+		returnError(w, "Max file size is 50MB", "/")
 		return
 	}
 	name := strings.ToValidUTF8(h.Filename, "")

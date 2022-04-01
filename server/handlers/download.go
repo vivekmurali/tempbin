@@ -21,10 +21,7 @@ type FileInfo struct {
 }
 
 func DownloadHandler(w http.ResponseWriter, r *http.Request) {
-	// Get file name
-	// Check if password protected
-	// Check if download limit
-	// fmt.Print(chi.URLParam(r, "url"))
+
 	url := chi.URLParam(r, "url")
 	name, isProtected, isLimit, _, limit, err := db.GetData(url)
 	info := FileInfo{Name: name, Url: url, IsLimit: isLimit, IsProtected: isProtected, Limit: limit}

@@ -4,6 +4,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description"
+			content="A temporary file storage. Your files will be kept for 10 minutes and deleted automatically. You can choose to password protect your file or limit the number of downloads.">
 		<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 		<link rel="stylesheet" href="/static/style.css">
 		<title>Download {{.Name}}</title>
@@ -18,25 +20,26 @@
 		</header>
 
 		<div class="container">
-		<h3>Download <span class="primary-download">{{.Name}}</span></h3>
-		{{if .IsLimit}}
-		<h5>Downloads remaining: {{.Limit}}</h5>
-		{{end}}
-		<form action="/download/{{.Url}}" method="POST">
-			{{if .IsProtected}}
-			<!-- <label for="password">Password</label> -->
-			<input type="password" name="password" placeholder="Password"/>
+			<h3>Download <span class="primary-download">{{.Name}}</span></h3>
+			{{if .IsLimit}}
+			<h5>Downloads remaining: {{.Limit}}</h5>
 			{{end}}
-			<button type="submit" id="submit-btn" class="outline width-limit" value="download" onclick="load()" >Download</button>
-		</form>
-	</div>
-	{{template "footer" .}}
+			<form action="/download/{{.Url}}" method="POST">
+				{{if .IsProtected}}
+				<!-- <label for="password">Password</label> -->
+				<input type="password" name="password" placeholder="Password" />
+				{{end}}
+				<button type="submit" id="submit-btn" class="outline width-limit" value="download"
+					onclick="load()">Download</button>
+			</form>
+		</div>
+		{{template "footer" .}}
 	</body>
 
 </html>
 
 <script>
-	function load(){
+	function load() {
 		document.getElementById("submit-btn").setAttribute('aria-busy', "true");
 	}
 </script>
