@@ -12,7 +12,15 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-co-op/gocron"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
+
+func init() {
+	prometheus.Register(handlers.TotalRequests)
+	prometheus.Register(handlers.ResponseStatus)
+	prometheus.Register(handlers.HttpDuration)
+}
 
 func main() {
 	// Initialization
@@ -27,14 +35,17 @@ func main() {
 
 	// middlewares
 	r.Use(middleware.Logger)
+	r.Use(handlers.PrometheusMiddleware)
+
+	//Fileserver to serve static files
+	workDir, _ := os.Getwd()
+	filesDir := http.Dir(filepath.Join(workDir, "server/static"))
+	FileServer(r, "/static", filesDir)
 
 	// routes
 	r.Get("/", handlers.UploadHandler)
 	r.Post("/upload", handlers.Upload)
-
-	workDir, _ := os.Getwd()
-	filesDir := http.Dir(filepath.Join(workDir, "server/static"))
-	FileServer(r, "/static", filesDir)
+	r.Get("/metrics", promhttp.Handler().ServeHTTP)
 
 	r.Route("/download", func(r chi.Router) {
 		r.Get("/{url}", handlers.DownloadHandler)
@@ -43,6 +54,7 @@ func main() {
 	http.ListenAndServe(":3001", r)
 }
 
+//Fileserver to serve static files
 func FileServer(r chi.Router, path string, root http.FileSystem) {
 	if strings.ContainsAny(path, "{}*") {
 		panic("FileServer does not permit any URL parameters.")
