@@ -26,8 +26,9 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Upload(w http.ResponseWriter, r *http.Request) {
+
 	// parse multipart with max 10mb in memory
-	err := r.ParseMultipartForm(10 << 20)
+	err := r.ParseMultipartForm(50 << 20)
 	if err != nil {
 		log.Println("Problem parsing the file " + err.Error())
 		returnError(w, "", "/")

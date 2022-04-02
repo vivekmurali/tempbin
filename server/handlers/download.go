@@ -28,7 +28,7 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// fmt.Fprint(w, err)
 		// w.WriteHeader(http.StatusBadRequest)
-		returnError(w, "", "/download/"+url)
+		returnError(w, "File does not exist, must have been deleted.", "/")
 		return
 	}
 
