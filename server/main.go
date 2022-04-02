@@ -20,6 +20,7 @@ func init() {
 	prometheus.Register(handlers.TotalRequests)
 	prometheus.Register(handlers.ResponseStatus)
 	prometheus.Register(handlers.HttpDuration)
+	prometheus.Register(handlers.NumFiles)
 }
 
 func main() {

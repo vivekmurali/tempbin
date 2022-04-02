@@ -43,6 +43,12 @@ var HttpDuration = promauto.NewHistogramVec(prometheus.HistogramOpts{
 	Help: "Duration of HTTP requests.",
 }, []string{"path"})
 
+var NumFiles = prometheus.NewGaugeVec(
+	prometheus.GaugeOpts{
+		Name: "files_in_bucket",
+		Help: "Number of files currently in the bucket",
+	}, []string{})
+
 func PrometheusMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// route := mux.CurrentRoute(r)
