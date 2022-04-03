@@ -8,7 +8,7 @@ import (
 )
 
 // ch, name, url, is_protected, password, is_limit, limit
-func InsertDB(ch chan bool, name string, url string, isProtected bool, password string, isLimit bool, limit int) {
+func InsertDB(ch chan bool, name string, url string, isProtected bool, password string, isLimit bool, limit int, duration int) {
 	// func InsertDB(ch chan bool, errch chan error, name string, url string, isProtected bool, password string, isLimit bool, limit int) {
 
 	tx, _ := Env.DB.Begin(context.Background())
@@ -21,7 +21,7 @@ func InsertDB(ch chan bool, name string, url string, isProtected bool, password 
 	// 	errch <- err
 	// }
 
-	tag, err := tx.Exec(context.Background(), "insert into files(name, url, is_protected, password, is_limit, \"limit\") values($1, $2, $3, $4, $5, $6)", name, url, isProtected, pw, isLimit, limit)
+	tag, err := tx.Exec(context.Background(), "insert into files(name, url, is_protected, password, is_limit, \"limit\", duration) values($1, $2, $3, $4, $5, $6, $7)", name, url, isProtected, pw, isLimit, limit, duration)
 	if err != nil {
 		log.Println(err)
 		tx.Rollback(context.Background())

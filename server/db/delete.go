@@ -7,7 +7,7 @@ import (
 
 func GetToDelete() ([]string, float64, error) {
 	files := make([]string, 0)
-	rows, err := Env.DB.Query(context.Background(), " select url, upload_time from files")
+	rows, err := Env.DB.Query(context.Background(), " select url, upload_time, duration from files")
 	if err != nil {
 		return nil, 0, err
 	}
@@ -21,12 +21,13 @@ func GetToDelete() ([]string, float64, error) {
 		count++
 		var file string
 		var t time.Time
+		var duration int
 
-		err = rows.Scan(&file, &t)
+		err = rows.Scan(&file, &t, &duration)
 		if err != nil {
 			return nil, 0, err
 		}
-		if time.Now().Sub(t) > time.Minute*10 {
+		if time.Now().Sub(t) > time.Minute*time.Duration(duration) {
 			files = append(files, file)
 			tag, err := Env.DB.Exec(context.Background(), "delete from files where url = $1", file)
 			if err != nil {
