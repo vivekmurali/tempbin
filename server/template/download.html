@@ -14,12 +14,9 @@
 
 	<body>
 		<h1></h1>
-		<!-- <header> -->
 		<div class="container">
 			<h1> <a href="/"> TEMPB.IN</a></h1>
 		</div>
-
-		<!-- </header> -->
 
 		<div class="container">
 			<h3>Download <span class="primary-download">{{.Name}}</span></h3>
@@ -28,20 +25,12 @@
 			{{end}}
 			<form action="/download/{{.Url}}" method="POST">
 				{{if .IsProtected}}
-				<!-- <label for="password">Password</label> -->
 				<input type="password" name="password" placeholder="Password" />
 				{{end}}
-				<button type="submit" id="submit-btn" class="outline width-limit" value="download"
-					onclick="load()">Download</button>
+				<button type="submit" id="submit-btn" class="outline width-limit" value="download">Download</button>
 			</form>
 		</div>
 		{{template "footer" .}}
 	</body>
 
 </html>
-
-<script>
-	function load() {
-		document.getElementById("submit-btn").setAttribute('aria-busy', "true");
-	}
-</script>

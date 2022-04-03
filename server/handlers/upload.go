@@ -67,7 +67,16 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	ch := make(chan bool)
 	// errch := make(chan error)
 
-	go db.InsertDB(ch, name, url, isProtected, password, isLimit, limit)
+	duration, err := strconv.Atoi(r.FormValue("duration"))
+	if err != nil {
+		log.Println(err)
+		duration = 10
+	}
+	if duration > 30 {
+		returnError(w, "Maximum 30 minutes", "/")
+	}
+
+	go db.InsertDB(ch, name, url, isProtected, password, isLimit, limit, duration)
 
 	// url is the same as the file name
 	tmpFile, err := os.Create("./bucket/" + url)
