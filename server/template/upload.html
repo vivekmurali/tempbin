@@ -23,27 +23,27 @@
 			<form action="/upload" method="post" enctype="multipart/form-data">
 
 				<!-- <label for="file">Upload a file</label> -->
-				<input type="file" name="file" id="" required />
+				<input type="file" name="file"  required />
 				<br>
 				<div class="grid">
 					<details>
 						<summary>Password protect</summary>
 						<!-- <label for="password">password protect (optional)</label> -->
-						<input type="password" name="password" id="" placeholder="Password" />
+						<input type="password" name="password"  placeholder="Password" />
 					</details>
 				</div>
 				<!-- <br> -->
 				<div class="grid">
 					<details>
 						<summary>Limit downloads</summary>
-						<input type="number" name="limit" id="" placeholder="5" />
+						<input type="number" name="limit" placeholder="5" />
 					</details>
 					<!-- <label for="number">limit the number of downloads (optional)</label> -->
 				</div>
 				<div class="grid">
 					<details>
-						<summary>Time limit (Default is 10)</summary>
-						<input type="number" name="duration" id="" placeholder="10" />
+						<summary>Time limit in minutes (Default is 10, max is 120)</summary>
+						<input type="number" name="duration" min="1" max="120" placeholder="10" />
 					</details>
 				</div>
 				<br>

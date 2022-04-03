@@ -72,7 +72,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		duration = 10
 	}
-	if duration > 30 {
+	if duration > 120 {
 		returnError(w, "Maximum 30 minutes", "/")
 	}
 
